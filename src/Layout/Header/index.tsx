@@ -8,8 +8,10 @@ import {
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import Logo from 'assets/logo-dark.png'
+import { useGetListProducts } from 'hooks/endpoints'
 
 const Header = () => {
+  const { data } = useGetListProducts()
   return (
     <AppBar position="static" sx={{ backgroundColor: 'white' }}>
       <Toolbar>
