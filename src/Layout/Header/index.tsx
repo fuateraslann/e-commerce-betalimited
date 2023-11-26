@@ -8,8 +8,10 @@ import {
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import Logo from 'assets/logo-dark.png'
+import { useGetListProducts } from 'hooks/endpoints'
 
 const Header = () => {
+  const { data } = useGetListProducts()
   return (
     <AppBar position="static" sx={{ backgroundColor: 'white' }}>
       <Toolbar>
@@ -29,6 +31,7 @@ const Header = () => {
                 display: 'flex',
                 alignItems: 'center',
                 width: '50%',
+                height: '40px',
                 margin: '20px',
               }}
             >
@@ -45,7 +48,8 @@ const Header = () => {
               <Button
                 variant="contained"
                 sx={{
-                  height: '50px',
+                  width: '15%',
+                  height: '100%',
                   borderRadius: '0 15px 15px 0',
                 }}
               >
