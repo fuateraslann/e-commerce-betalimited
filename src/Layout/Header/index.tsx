@@ -31,6 +31,7 @@ const Header = () => {
                 display: 'flex',
                 alignItems: 'center',
                 width: '50%',
+                height: '40px',
                 margin: '20px',
               }}
             >
@@ -47,7 +48,8 @@ const Header = () => {
               <Button
                 variant="contained"
                 sx={{
-                  height: '50px',
+                  width: '15%',
+                  height: '100%',
                   borderRadius: '0 15px 15px 0',
                 }}
               >

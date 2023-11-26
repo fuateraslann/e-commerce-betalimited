@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import Header from 'Layout/Header'
-import './App.css'
+import ProductList from 'Layout/ProductList'
 
 function App() {
   const queryClient = new QueryClient()
@@ -11,15 +11,19 @@ function App() {
       fontFamily: 'Roboto, sans-serif',
       fontSize: 12,
       button: {
+        color: '#be5155',
         textTransform: 'none',
       },
     },
     palette: {
       primary: {
-        light: '#f44336',
-        main: '#c1135cd6',
-        dark: '#c1135ba',
+        light: '#dda0a8',
+        main: '#be5155',
         contrastText: '#fff',
+      },
+      secondary: {
+        light: '#e6b9bf',
+        main: '#c65866',
       },
     },
   })
@@ -27,15 +31,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <div className="App">
-          <Header />
-          <header className="App-header">
-            <p>
-              Edit <code>src/App.tsx</code> and save to reload.
-            </p>
-            Learn React
-          </header>
-        </div>
+        <Header />
+        <ProductList />
       </ThemeProvider>
     </QueryClientProvider>
   )
