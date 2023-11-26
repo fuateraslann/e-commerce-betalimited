@@ -8,10 +8,9 @@ import {
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import Logo from 'assets/logo-dark.png'
-import { useGetListProducts } from 'hooks/endpoints'
+import SearchBar from './SearchBar'
 
 const Header = () => {
-  const { data } = useGetListProducts()
   return (
     <AppBar position="static" sx={{ backgroundColor: 'white' }}>
       <Toolbar>
@@ -24,44 +23,7 @@ const Header = () => {
             />
           </Grid>
           <Grid item xs={6} sm={9} sx={{ textAlign: 'center' }}>
-            <div
-              style={{
-                border: '1px solid #ccc',
-                borderRadius: '35px',
-                display: 'flex',
-                alignItems: 'center',
-                width: '50%',
-                height: '40px',
-                margin: '20px',
-              }}
-            >
-              <SearchIcon sx={{ color: 'gray', marginLeft: 2 }} />
-              <InputBase
-                placeholder="Searching for..."
-                style={{
-                  color: 'gray',
-                  width: '100%',
-                  padding: '8px',
-                }}
-              />
-
-              <Button
-                variant="contained"
-                sx={{
-                  width: '15%',
-                  height: '100%',
-                  borderRadius: '0 15px 15px 0',
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Search
-                </Typography>
-              </Button>
-            </div>
+            <SearchBar />
           </Grid>
         </Grid>
       </Toolbar>
