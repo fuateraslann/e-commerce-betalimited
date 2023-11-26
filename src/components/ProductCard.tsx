@@ -10,8 +10,9 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import { TProduct } from 'types'
 
-const ProductCard = ({ product }: any) => {
+const ProductCard = ({ product }: { product: TProduct }) => {
   const theme = useTheme()
 
   const [quantity, setQuantity] = useState(1)
@@ -28,13 +29,28 @@ const ProductCard = ({ product }: any) => {
 
   return (
     <Card>
+      <div style={{ backgroundColor: '#efefef', padding: 10 }}>
+        <div
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            width: '20%',
+            borderRadius: 10,
+            textAlign: 'center',
+          }}
+        >
+          <Typography sx={{ padding: 1 }} color={'white'}>
+            {product.discount}
+          </Typography>
+        </div>
+      </div>
       <CardMedia
         component="img"
-        height="240px"
-        image={product.image}
+        height="300px"
+        src={product.image}
         alt={product.name}
-        style={{ objectFit: 'cover' }}
-      />
+        style={{ backgroundColor: '#efefef' }}
+      ></CardMedia>
+
       <CardContent
         style={{
           height: 90,
@@ -64,15 +80,24 @@ const ProductCard = ({ product }: any) => {
               precision={0.1}
             />
             <Typography variant="body2" color="textSecondary">
-              ({product.reviews} 1)
+              ({product.rating})
             </Typography>
           </div>
           <Typography
-            style={{ marginTop: 15 }}
+            style={{ marginTop: 15, fontWeight: 'bold' }}
             variant="body1"
-            color="textSecondary"
+            color={theme.palette.primary.main}
           >
-            ${product.price}
+            <span>${product.price} </span>
+            <span
+              style={{
+                color: 'gray',
+                textDecoration: 'line-through',
+                marginLeft: 2,
+              }}
+            >
+              ${product.originalPrice}
+            </span>
           </Typography>
         </div>
 
