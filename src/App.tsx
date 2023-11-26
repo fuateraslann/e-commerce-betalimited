@@ -5,6 +5,7 @@ function App() {
   const theme = createTheme({
     typography: {
       fontFamily: 'Roboto, sans-serif',
+      fontSize: 12,
       button: {
         textTransform: 'none',
       },
