@@ -22,9 +22,6 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   const { mutateAsync: addToCart } = useAddToCart()
   const { mutateAsync: subtractFromCart } = useSubtractFromCart()
 
-  const cartData = queryClient.getQueryData('viewCart')
-  console.log(cartData)
-
   const quantity = useSelector(
     (state: RootState) => state.product.productsQuantity[product.id]
   )
@@ -64,7 +61,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       </div>
       <CardMedia
         component="img"
-        height="300px"
+        height="90%"
         src={product.image}
         alt={product.name}
         style={{ backgroundColor: '#efefef' }}
