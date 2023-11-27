@@ -7,8 +7,13 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const sessionId = await getSessionId()
-    config.headers['Session-ID'] = sessionId
+    if (sessionStorage.getItem('sessionID')) {
+      config.headers['Session-ID'] = sessionStorage.getItem('sessionID')
+    } else {
+      const sessionId = await getSessionId()
+      config.headers['Session-ID'] = sessionId
+    }
+
     return config
   },
   (error) => {
@@ -18,6 +23,7 @@ axiosInstance.interceptors.request.use(
 
 const getSessionId = async () => {
   const response = await axios.get(baseURL + '/createsession')
+  sessionStorage.setItem('sessionID', response.data)
   return response.data
 }
 
