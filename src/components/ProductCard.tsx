@@ -11,19 +11,26 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { TProduct } from 'types'
+import { useAddToCart, useSubtractFromCart } from 'hooks/endpoints'
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   const theme = useTheme()
+  const { mutateAsync: addToCart } = useAddToCart()
+  const { mutateAsync: subtractFromCart } = useSubtractFromCart()
 
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(0)
 
-  const handleIncrease = () => {
-    setQuantity(quantity + 1)
+  const handleIncrease = async () => {
+    await addToCart({ id: product.id }).then(() => {
+      setQuantity(quantity + 1)
+    })
   }
 
-  const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
+  const handleDecrease = async () => {
+    if (quantity > 0) {
+      await subtractFromCart({ id: product.id }).then(() => {
+        setQuantity(quantity - 1)
+      })
     }
   }
 
@@ -116,14 +123,17 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                 border: '1px solid',
                 borderColor: theme.palette.primary.main,
                 borderRadius: 1,
-                display: 'none',
+                display: quantity == 0 ? 'none' : 'inline flex',
               }}
+              onClick={handleDecrease}
             >
               <RemoveIcon sx={{ color: theme.palette.primary.main }} />
             </IconButton>
           </div>
 
-          <div style={{ flex: 1, margin: 5 }}>1</div>
+          <Typography fontWeight={'bold'} style={{ flex: 1, margin: 5 }}>
+            {quantity > 0 && quantity}
+          </Typography>
           <IconButton
             sx={{
               flex: 2,
@@ -132,6 +142,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
               borderColor: theme.palette.primary.main,
               borderRadius: 1,
             }}
+            onClick={handleIncrease}
           >
             <AddIcon sx={{ color: theme.palette.primary.main }} />
           </IconButton>
