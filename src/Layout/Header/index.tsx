@@ -1,67 +1,24 @@
-import {
-  AppBar,
-  Toolbar,
-  InputBase,
-  Grid,
-  Typography,
-  Button,
-} from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
+import { AppBar, Toolbar, Grid } from '@mui/material'
 import Logo from 'assets/logo-dark.png'
-import { useGetListProducts } from 'hooks/endpoints'
-
+import SearchBar from './SearchBar'
+import { CartModal } from 'components'
 const Header = () => {
-  const { data } = useGetListProducts()
   return (
     <AppBar position="static" sx={{ backgroundColor: 'white' }}>
       <Toolbar>
         <Grid container alignItems="center">
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={4} sm={4}>
             <img
               src={Logo}
               alt="Logo"
               style={{ height: '50px', marginRight: '10px' }}
             />
           </Grid>
-          <Grid item xs={6} sm={9} sx={{ textAlign: 'center' }}>
-            <div
-              style={{
-                border: '1px solid #ccc',
-                borderRadius: '35px',
-                display: 'flex',
-                alignItems: 'center',
-                width: '50%',
-                height: '40px',
-                margin: '20px',
-              }}
-            >
-              <SearchIcon sx={{ color: 'gray', marginLeft: 2 }} />
-              <InputBase
-                placeholder="Searching for..."
-                style={{
-                  color: 'gray',
-                  width: '100%',
-                  padding: '8px',
-                }}
-              />
-
-              <Button
-                variant="contained"
-                sx={{
-                  width: '15%',
-                  height: '100%',
-                  borderRadius: '0 15px 15px 0',
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Search
-                </Typography>
-              </Button>
-            </div>
+          <Grid item xs={5} sm={6} sx={{ textAlign: 'center' }}>
+            <SearchBar />
+          </Grid>
+          <Grid item xs={3} sm={2}>
+            <CartModal />
           </Grid>
         </Grid>
       </Toolbar>

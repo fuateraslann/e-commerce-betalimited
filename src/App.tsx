@@ -1,10 +1,20 @@
+import { useEffect } from 'react'
+
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { Provider } from 'react-redux'
+
 import Header from 'Layout/Header'
 import ProductList from 'Layout/ProductList'
-
+import { store } from 'redux/store'
 function App() {
   const queryClient = new QueryClient()
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem('sessionID')
+    }
+  }, [])
 
   const theme = createTheme({
     typography: {
@@ -30,10 +40,12 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Header />
-        <ProductList />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Header />
+          <ProductList />
+        </ThemeProvider>
+      </Provider>
     </QueryClientProvider>
   )
 }

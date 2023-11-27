@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useQueryClient } from 'react-query'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   Card,
   CardContent,
@@ -10,31 +11,65 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import { TProduct } from 'types'
+import { useAddToCart, useSubtractFromCart } from 'hooks/endpoints'
+import { RootState } from 'redux/store'
+import { productsSlice } from 'redux/slices/products'
 
-const ProductCard = ({ product }: any) => {
+const ProductCard = ({ product }: { product: TProduct }) => {
   const theme = useTheme()
+  const queryClient = useQueryClient()
+  const { mutateAsync: addToCart } = useAddToCart()
+  const { mutateAsync: subtractFromCart } = useSubtractFromCart()
 
-  const [quantity, setQuantity] = useState(1)
+  const cartData = queryClient.getQueryData('viewCart')
+  console.log(cartData)
 
-  const handleIncrease = () => {
-    setQuantity(quantity + 1)
+  const quantity = useSelector(
+    (state: RootState) => state.product.productsQuantity[product.id]
+  )
+
+  const dispatch = useDispatch()
+  const handleIncrease = async () => {
+    await addToCart({ id: product.id }).then(() => {
+      dispatch(productsSlice.actions.addProduct({ id: product.id }))
+    })
+    queryClient.refetchQueries('viewCart')
   }
 
-  const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
+  const handleDecrease = async () => {
+    if (quantity > 0) {
+      await subtractFromCart({ id: product.id }).then(() => {
+        dispatch(productsSlice.actions.removeProduct({ id: product.id }))
+      })
     }
+    queryClient.refetchQueries('viewCart')
   }
 
   return (
     <Card>
+      <div style={{ backgroundColor: '#efefef', padding: 10 }}>
+        <div
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            width: '20%',
+            borderRadius: 10,
+            textAlign: 'center',
+          }}
+        >
+          <Typography sx={{ padding: 1 }} color={'white'}>
+            {product.discount}
+          </Typography>
+        </div>
+      </div>
       <CardMedia
         component="img"
-        height="240px"
-        image={product.image}
+        height="300px"
+        src={product.image}
         alt={product.name}
-        style={{ objectFit: 'cover' }}
-      />
+        style={{ backgroundColor: '#efefef' }}
+      ></CardMedia>
+
       <CardContent
         style={{
           height: 90,
@@ -64,15 +99,24 @@ const ProductCard = ({ product }: any) => {
               precision={0.1}
             />
             <Typography variant="body2" color="textSecondary">
-              ({product.reviews} 1)
+              ({product.rating})
             </Typography>
           </div>
           <Typography
-            style={{ marginTop: 15 }}
+            style={{ marginTop: 15, fontWeight: 'bold' }}
             variant="body1"
-            color="textSecondary"
+            color={theme.palette.primary.main}
           >
-            ${product.price}
+            <span>${product.price} </span>
+            <span
+              style={{
+                color: 'gray',
+                textDecoration: 'line-through',
+                marginLeft: 2,
+              }}
+            >
+              ${product.originalPrice}
+            </span>
           </Typography>
         </div>
 
@@ -91,14 +135,17 @@ const ProductCard = ({ product }: any) => {
                 border: '1px solid',
                 borderColor: theme.palette.primary.main,
                 borderRadius: 1,
-                display: 'none',
+                display: quantity ? 'inline flex' : 'none',
               }}
+              onClick={handleDecrease}
             >
               <RemoveIcon sx={{ color: theme.palette.primary.main }} />
             </IconButton>
           </div>
 
-          <div style={{ flex: 1, margin: 5 }}>1</div>
+          <Typography fontWeight={'bold'} style={{ flex: 1, margin: 5 }}>
+            {quantity > 0 && quantity}
+          </Typography>
           <IconButton
             sx={{
               flex: 2,
@@ -107,6 +154,7 @@ const ProductCard = ({ product }: any) => {
               borderColor: theme.palette.primary.main,
               borderRadius: 1,
             }}
+            onClick={handleIncrease}
           >
             <AddIcon sx={{ color: theme.palette.primary.main }} />
           </IconButton>
