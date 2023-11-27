@@ -21,7 +21,7 @@ const SearchBar = () => {
           .catch((error) => {
             console.log(error)
           })
-      else return []
+      else return undefined
     },
     [productName]
   )
