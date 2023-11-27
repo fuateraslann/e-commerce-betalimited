@@ -1,29 +1,24 @@
-import {
-  AppBar,
-  Toolbar,
-  InputBase,
-  Grid,
-  Typography,
-  Button,
-} from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
+import { AppBar, Toolbar, Grid } from '@mui/material'
 import Logo from 'assets/logo-dark.png'
 import SearchBar from './SearchBar'
-
+import { CartModal } from 'components'
 const Header = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: 'white' }}>
       <Toolbar>
         <Grid container alignItems="center">
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={4} sm={4}>
             <img
               src={Logo}
               alt="Logo"
               style={{ height: '50px', marginRight: '10px' }}
             />
           </Grid>
-          <Grid item xs={6} sm={9} sx={{ textAlign: 'center' }}>
+          <Grid item xs={5} sm={6} sx={{ textAlign: 'center' }}>
             <SearchBar />
+          </Grid>
+          <Grid item xs={3} sm={2}>
+            <CartModal />
           </Grid>
         </Grid>
       </Toolbar>

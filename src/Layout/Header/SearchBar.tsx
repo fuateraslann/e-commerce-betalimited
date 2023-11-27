@@ -38,8 +38,8 @@ const SearchBar = () => {
         borderRadius: '35px',
         display: 'flex',
         alignItems: 'center',
-        width: '50%',
         height: '40px',
+        width: '60%',
         margin: '20px',
       }}
     >
