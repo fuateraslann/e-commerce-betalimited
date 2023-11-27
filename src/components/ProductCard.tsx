@@ -10,11 +10,13 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import { useQueryClient } from 'react-query'
 import { TProduct } from 'types'
 import { useAddToCart, useSubtractFromCart } from 'hooks/endpoints'
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   const theme = useTheme()
+  const queryClient = useQueryClient()
   const { mutateAsync: addToCart } = useAddToCart()
   const { mutateAsync: subtractFromCart } = useSubtractFromCart()
 
@@ -24,6 +26,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
     await addToCart({ id: product.id }).then(() => {
       setQuantity(quantity + 1)
     })
+    queryClient.refetchQueries('viewCart')
   }
 
   const handleDecrease = async () => {
@@ -32,6 +35,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         setQuantity(quantity - 1)
       })
     }
+    queryClient.refetchQueries('viewCart')
   }
 
   return (

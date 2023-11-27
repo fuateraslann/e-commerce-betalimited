@@ -2,10 +2,11 @@ import Badge, { BadgeProps } from '@mui/material/Badge'
 import { styled } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Container } from '@mui/material'
 import CartModal from './CartModal'
 import { useViewCart } from 'hooks/endpoints'
+import { TCartProduct, TProduct } from 'types'
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -20,12 +21,11 @@ export default function Cart() {
   const [openModal, setOpenModal] = useState(false)
   const { data: cartItems, refetch } = useViewCart()
 
-  useEffect(() => {
-    if (openModal) {
-      refetch()
-    }
-    console.log('asdas')
-  }, [openModal])
+  const totalProductQuantity = useMemo(() => {
+    return cartItems
+      ?.map((e: TCartProduct) => e.quantity)
+      .reduce((a: number, b: number) => a + b, 0)
+  }, [cartItems])
 
   const handleOpenModal = () => {
     setOpenModal(true)
@@ -38,7 +38,7 @@ export default function Cart() {
   return (
     <Container>
       <IconButton onClick={handleOpenModal} aria-label="cart">
-        <StyledBadge badgeContent={4} color="secondary">
+        <StyledBadge badgeContent={totalProductQuantity} color="secondary">
           <ShoppingCartIcon />
         </StyledBadge>
       </IconButton>

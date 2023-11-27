@@ -56,7 +56,7 @@ const CartProduct = ({ product }: { product: TCartProduct }) => {
         }
         sx={{ marginRight: 10 }}
       />
-      <QuantityButtons quantity={1} />
+      <QuantityButtons quantity={product.quantity} />
     </ListItem>
   )
 }
