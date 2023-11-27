@@ -13,6 +13,7 @@
 
 - I don't have time to write tests.I could write comprehensive tests of the application.
 - I had no experience with Redux Saga, but I know similar work was done with react query. If I had enough time, I could do it using the desired redux-saga.
+- Product photos may sometimes be difficult to upload due to source reasons.
 
 ## Online Demo
 
