@@ -1,7 +1,7 @@
-import { Button, CircularProgress, Container, Grid } from '@mui/material'
+import { Button, Container, Grid } from '@mui/material'
 import { useQueryClient, useIsFetching } from 'react-query'
 import { isEmpty } from 'lodash'
-import ProductCard from 'components/ProductCard'
+import { ProductCard } from 'components'
 import { useGetListProducts } from 'hooks/endpoints'
 import { useEffect, useState } from 'react'
 import { TProduct } from 'types'
@@ -9,7 +9,7 @@ import { TProduct } from 'types'
 const ProductList = () => {
   const queryClient = useQueryClient()
 
-  const [products, setProducts] = useState<TProduct[] | undefined>([])
+  const [products, setProducts] = useState<TProduct[] | undefined>(undefined)
   const [sliceIndex, setSliceIndex] = useState<number>(3)
   const { data: listProductsData } = useGetListProducts()
 
