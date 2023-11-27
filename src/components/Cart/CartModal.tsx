@@ -5,12 +5,12 @@ import {
   List,
   DialogActions,
   Button,
+  ListItem,
 } from '@mui/material'
-import { useViewCart } from 'hooks/endpoints'
-import React, { useEffect } from 'react'
+import { isEmpty } from 'lodash'
+
 import { TCartProduct } from 'types'
 import CartProduct from './CartProduct'
-
 interface ICartModalProps {
   cartItems: TCartProduct[] | undefined
   onCloseModal: () => void
@@ -22,14 +22,21 @@ const CartModal = ({ cartItems, onCloseModal, openModal }: ICartModalProps) => {
       <DialogTitle>List Of Products</DialogTitle>
       <DialogContent>
         <List>
-          {cartItems &&
+          {isEmpty(cartItems) ? (
+            <ListItem> No Item Found...</ListItem>
+          ) : (
             cartItems?.map((product: TCartProduct) => {
               return <CartProduct key={product.productId} product={product} />
-            })}
+            })
+          )}
         </List>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={onCloseModal}>
+        <Button
+          onClick={onCloseModal}
+          variant="contained"
+          sx={{ marginTop: 10 }}
+        >
           Buy Items
         </Button>
       </DialogActions>
