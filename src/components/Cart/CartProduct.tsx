@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux'
 import {
   ListItem,
   IconButton,
@@ -12,6 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import { useQueryClient } from 'react-query'
 import { TCartProduct } from 'types'
 import { useAddToCart, useSubtractFromCart } from 'hooks/endpoints'
+import { productsSlice } from 'redux/slices/products'
 
 interface IQuantityButtonsProps {
   quantity: number
@@ -41,16 +43,21 @@ const QuantityButtons = ({
 const CartProduct = ({ product }: { product: TCartProduct }) => {
   const theme = useTheme()
   const queryClient = useQueryClient()
+  const dispatch = useDispatch()
   const { mutateAsync: addToCart } = useAddToCart()
   const { mutateAsync: subtractFromCart } = useSubtractFromCart()
   const handleIncrease = async () => {
-    await addToCart({ id: product.productId })
+    await addToCart({ id: product.productId }).then(() => {
+      dispatch(productsSlice.actions.addProduct({ id: product.productId }))
+    })
     queryClient.refetchQueries('viewCart')
   }
 
   const handleDecrease = async () => {
     if (product.quantity > 0) {
-      await subtractFromCart({ id: product.productId })
+      await subtractFromCart({ id: product.productId }).then(() => {
+        dispatch(productsSlice.actions.removeProduct({ id: product.productId }))
+      })
       queryClient.refetchQueries('viewCart')
     }
   }

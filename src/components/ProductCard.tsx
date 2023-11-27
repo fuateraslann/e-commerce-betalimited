@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useQueryClient } from 'react-query'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   Card,
   CardContent,
@@ -10,9 +11,10 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { useQueryClient } from 'react-query'
 import { TProduct } from 'types'
 import { useAddToCart, useSubtractFromCart } from 'hooks/endpoints'
+import { RootState } from 'redux/store'
+import { productsSlice } from 'redux/slices/products'
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   const theme = useTheme()
@@ -20,11 +22,17 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   const { mutateAsync: addToCart } = useAddToCart()
   const { mutateAsync: subtractFromCart } = useSubtractFromCart()
 
-  const [quantity, setQuantity] = useState(0)
+  const cartData = queryClient.getQueryData('viewCart')
+  console.log(cartData)
 
+  const quantity = useSelector(
+    (state: RootState) => state.product.productsQuantity[product.id]
+  )
+
+  const dispatch = useDispatch()
   const handleIncrease = async () => {
     await addToCart({ id: product.id }).then(() => {
-      setQuantity(quantity + 1)
+      dispatch(productsSlice.actions.addProduct({ id: product.id }))
     })
     queryClient.refetchQueries('viewCart')
   }
@@ -32,7 +40,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   const handleDecrease = async () => {
     if (quantity > 0) {
       await subtractFromCart({ id: product.id }).then(() => {
-        setQuantity(quantity - 1)
+        dispatch(productsSlice.actions.removeProduct({ id: product.id }))
       })
     }
     queryClient.refetchQueries('viewCart')
@@ -127,7 +135,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                 border: '1px solid',
                 borderColor: theme.palette.primary.main,
                 borderRadius: 1,
-                display: quantity == 0 ? 'none' : 'inline flex',
+                display: quantity ? 'inline flex' : 'none',
               }}
               onClick={handleDecrease}
             >

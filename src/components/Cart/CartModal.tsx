@@ -32,13 +32,15 @@ const CartModal = ({ cartItems, onCloseModal, openModal }: ICartModalProps) => {
         </List>
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={onCloseModal}
-          variant="contained"
-          sx={{ marginTop: 10 }}
-        >
-          Buy Items
-        </Button>
+        {!isEmpty(cartItems) && (
+          <Button
+            onClick={onCloseModal}
+            variant="contained"
+            sx={{ marginTop: 10 }}
+          >
+            Buy Items
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   )
