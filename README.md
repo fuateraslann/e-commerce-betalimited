@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# Beta Limited E-commerce
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What I have done ?
+
+- I created the desired design in the application. I used material UI components when creating this design. I had to add inline-css at some points.
+- I provided the desired data flow ; but because the product quantity does not come from the product list API.I had to manage this with states. At first I used local state, but when it needed to be checked from the cart, I had to move it to redux.
+- I used the react-query library , which I found effective, in the application for data fetching and state management.
+- I made a responsive design with MUI Grid component.
+- Since there is no product update API and review count in the backend, I only put the rating value I received from the backend into the rating component. I could also manage it via local state.
+- Since there is no image in the view cart API, I could not put an image in the cart design. I could get this from the list product API, but it wouldn't be reasonable in terms of dependency.
+
+## I am sad with
+
+- I don't have time to write tests.I could write comprehensive tests of the application.
+- I had no experience with Redux Saga, but I know similar work was done with react query. If I had enough time, I could do it using the desired redux-saga.
+
+## Online Demo
+
+- https://e-commerce-beta.netlify.app/
 
 ## Available Scripts
 
@@ -38,9 +54,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
