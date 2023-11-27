@@ -7,8 +7,7 @@ const ProductIcons = () => {
   return (
     <div
       style={{
-        margin: 10,
-        height: '1vh',
+        marginBottom: 15,
         width: '20%',
         display: 'flex',
         padding: 10,
