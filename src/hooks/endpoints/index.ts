@@ -49,7 +49,7 @@ export const useAddToCart = (): UseMutationResult<
       const data = await axios
         .post(`add-to-cart?id=${payload.id}`)
         .then((response) => {
-          console.log(response)
+          console.log(response.data)
           return response.data
         })
         .catch((error: AxiosError<{ error: any }>) => {
@@ -74,7 +74,7 @@ export const useSubtractFromCart = (): UseMutationResult<
       const data = await axios
         .post(`subtract-from-cart?id=${payload.id}`)
         .then((response) => {
-          console.log(response)
+          console.log(response.data)
           return response.data
         })
         .catch((error: AxiosError<{ error: any }>) => {

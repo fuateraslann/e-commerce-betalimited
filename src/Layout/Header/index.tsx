@@ -14,10 +14,10 @@ const Header = () => {
               style={{ height: '50px', marginRight: '10px' }}
             />
           </Grid>
-          <Grid item xs={5} sm={6} sx={{ textAlign: 'center' }}>
+          <Grid item xs={7} sm={6} sx={{ textAlign: 'center' }}>
             <SearchBar />
           </Grid>
-          <Grid item xs={3} sm={2}>
+          <Grid item xs={1} sm={2}>
             <CartModal />
           </Grid>
         </Grid>
