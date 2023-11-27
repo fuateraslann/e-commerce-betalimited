@@ -2,9 +2,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import Header from 'Layout/Header'
 import ProductList from 'Layout/ProductList'
+import { useEffect } from 'react'
 
 function App() {
   const queryClient = new QueryClient()
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem('sessionID')
+    }
+  }, [])
 
   const theme = createTheme({
     typography: {
